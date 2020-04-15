@@ -74,16 +74,17 @@ if (police == NULL) {
     }
 
 
-
 enigmeData generateEnigme(enigme e){
   enigmeData ed [10];
   enigmeData edata;
   int i;
+
   int pos = randomize();
   for (i = 0; i < 10; i++) {
     fgets(ed[i].quest, 400, e.f);
     fscanf(e.f,"1)%s 2)%s 3)%s -%s\n",ed[i].c1, ed[i].c2, ed[i].c3, ed[i].x);
   }
+  fclose(e.f);
   strcpy(edata.quest,ed[pos].quest);
   strcpy (edata.c1 ,ed[pos].c1);
       strcpy(edata.c2 ,ed[pos].c2);
@@ -95,25 +96,29 @@ enigmeData generateEnigme(enigme e){
 
 
 int resolutionEnigme(enigmeData ed, SDL_Event event){
-  switch(event.type){
-         case SDL_KEYDOWN:
-            if(event.key.keysym.sym == SDLK_1){
-             if (strcmp (ed.c1, ed.x) == 0) {
-               return 1;
-             }
-            }else{
-              if(event.key.keysym.sym == SDLK_2){
-                if (strcmp (ed.c2, ed.x) == 0) {
-                  return 1;
+  while(1){
+  SDL_PollEvent(&event);
+    switch(event.type){
+          case SDL_KEYDOWN:
+              if(event.key.keysym.sym == SDLK_a){
+              if (strcmp (ed.c1, ed.x) == 0) {
+                return 1;
+              }
+              else {return 0;}
+              }else{
+                if(event.key.keysym.sym == SDLK_z){
+                  if (strcmp (ed.c2, ed.x) == 0) {
+                    return 1;
+                  } else {return 0;}
+              }else{
+                if(event.key.keysym.sym == SDLK_e){
+                  if (strcmp (ed.c3, ed.x) == 0) {
+                    return 1;
+                  } else {return 0;}
                 }
-             }else{
-               if(event.key.keysym.sym == SDLK_3){
-                 if (strcmp (ed.c3, ed.x) == 0) {
-                   return 1;
-                 }
-               }
-             }
-            }
-    }
-return 0;
-}
+              }
+              }
+      }
+  }
+return -1;
+}  

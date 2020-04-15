@@ -26,4 +26,5 @@ void showEnigme(enigmeData ed, SDL_Surface *screen, enigme e);
 int randomize();
 enigmeData generateEnigme(enigme e);
 int resolutionEnigme(enigmeData ed, SDL_Event event);
+
 #endif 
