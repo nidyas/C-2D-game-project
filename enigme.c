@@ -93,11 +93,42 @@ enigmeData generateEnigme(enigme e){
   return edata;
     }
 
-
-
-int resolutionEnigme(enigmeData ed, SDL_Event event){
+float convertTosec(int mill){
+  float sec;
+  sec = mill/1000;
+  return sec;
+}
+int resolutionEnigme(enigme e,enigmeData ed, SDL_Event event, SDL_Surface* screen){
+  unsigned int time = SDL_GetTicks();
+  char tim[8];
+  SDL_Surface *timetext;
   while(1){
   SDL_PollEvent(&event);
+  showEnigme(ed,screen,e);
+  unsigned int current = SDL_GetTicks();
+  float prin = convertTosec(current-time);
+  if (TTF_Init() < 0) {
+  printf("error\n");
+  }else{
+  TTF_Font * police = TTF_OpenFont("res/font.ttf",25);
+  SDL_Color noir = {255, 255, 255};
+
+  if (police == NULL) {
+    printf("error in font time\n");
+  }else{
+  sprintf(tim, "%0.f sec",prin);
+  timetext = TTF_RenderText_Solid(police, tim, noir);
+  TTF_CloseFont(police);
+  }
+  }
+  SDL_Rect rec;
+  rec.x=200;
+  rec.y =100;
+  SDL_BlitSurface(timetext,NULL, screen, &rec);
+  SDL_Flip(screen);
+  if((current - time) > 20000){
+    return 2;
+  }
     switch(event.type){
           case SDL_KEYDOWN:
               if(event.key.keysym.sym == SDLK_a){
@@ -120,5 +151,4 @@ int resolutionEnigme(enigmeData ed, SDL_Event event){
               }
       }
   }
-return -1;
 }  

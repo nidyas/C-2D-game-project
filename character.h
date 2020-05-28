@@ -1,35 +1,37 @@
 #ifndef CHARACTER_H_INCLUDED
 #define CHARACTER_H_INCLUDED
 
+#include <stdio.h>
+#include <stdlib.h>
+#include "SDL/SDL.h"
+#include "SDL/SDL_image.h"
+#include "SDL/SDL_mixer.h"
 
-typedef struct
-{
-   SDL_Surface* imaged[6];
-   SDL_Surface* imageg[6];
-    SDL_Surface* imageh[6];
-    SDL_Surface* imageb[6];
-    SDL_Surface* imageactuelle;
-   SDL_Rect Position_Absolue;
-   SDL_Rect Position_Relative;
-   SDL_Rect ScorePosition;
-   SDL_Rect LivesPosition;
-   SDL_Mixchunk son;
-    int score;
-    int lives;
-    int Direction;
-    int frame;
-}Character;
+typedef struct{
+  int shield; //number of shields
+  int hearts; //number of hearts
+  int highscore; //number
+  int higherjumps; // yes or no
+  int enigmahelp; //yes or no
+  int coins; //number
+ }state;
+typedef struct {
+ SDL_Surface * spriteleft[11];
+ SDL_Surface * spriteright[11];
+ SDL_Surface *shoot;
+ SDL_Surface * jump;
+ SDL_Surface *shoot_left;
+ SDL_Surface * jump_left;
+ SDL_Rect pmaxChar;
+ SDL_Rect pminChar;
+ SDL_Rect positionChar;
+ state s;
+}charac;
 
-
-
-Character Character_Init (Character C ,int x, int y);
-Character showChar(charac c, SDL_Surface * screen);
-Character animChar (charac c, SDL_Surface *screen, SDL_Event event);
+charac initChar ();
+void showChar(charac c, SDL_Surface * screen, char whichDirection);
+char animChar (charac c, SDL_Surface *screen, SDL_Event event, char whichDirection);
 void moveChar (SDL_Event event, SDL_Rect *posobj, int inWhichDir);
-void moveCharByMouse(SDL_Surface *screen,SDL_Rect * persoPos, SDL_Event event);
+void moveCharByMouse(SDL_Surface *screen,SDL_Rect * persoPos, SDL_Event event, char whichDirection);
 
-
-
-
-
-#endif // CHARACTER_H_INCLUDED
+#endif

@@ -21,10 +21,12 @@ typedef struct
  char c3[50];
  char x [50];
 }enigmeData;
+
+float covertTosec(int mill);
 enigme initEnigme ();
 void showEnigme(enigmeData ed, SDL_Surface *screen, enigme e);
 int randomize();
 enigmeData generateEnigme(enigme e);
-int resolutionEnigme(enigmeData ed, SDL_Event event);
+int resolutionEnigme(enigme e,enigmeData ed, SDL_Event event, SDL_Surface * screen);
 
 #endif 

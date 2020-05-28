@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "utilities.h": "c",
+        "background.h": "c"
+    }
+}
